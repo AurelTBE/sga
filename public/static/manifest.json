@@ -1,0 +1,23 @@
+{
+  "short_name": "SGA",
+  "name": "SGA Gym Féminine",
+  "icons": [
+    {
+      "src": "/static/android-chrome-192x192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/static/android-chrome-512x512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/?source=pwa",
+  "background_color": "#FFFFFF",
+  "display": "fullscreen",
+  "scope": "/",
+  "description": "Version hors ligne du site de la SGA",
+  "theme_color": "#d32f2f",
+  "gcm_sender_id": "539284504552"
+}
