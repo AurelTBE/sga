@@ -17,6 +17,11 @@
     }
   ],
   "env": {
-    "SERVER_KEY": "@fcm-auth"
+    "FCM_SERVER_KEY": "@fcm-auth"
+  },
+  "build": {
+    "env": {
+      "FCM_SERVER_KEY": "@fcm-auth"
+    }
   }
 }

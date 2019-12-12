@@ -43,7 +43,7 @@ const firebaseCloudMessaging = {
         headers: new Headers({
           'Content-Type':'application/json',
           'Content-Length': 0,
-          'Authorization': `${process.env.SERVER_KEY}`
+          'Authorization': process.env.FCM_SERVER_KEY
         }),
       })
       .then((res) => {

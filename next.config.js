@@ -2,6 +2,9 @@ const withOffline = require('next-offline')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 const nextConfig = {
+  env: {
+    FCM_SERVER_KEY: process.env.FCM_SERVER_KEY
+  },
   module: {
     rules: [
       { test: /\.css$/, use: 'css-loader' },
