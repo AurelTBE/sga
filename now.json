@@ -17,6 +17,6 @@
     }
   ],
   "env": {
-    "SERVER_KEY": "@fcmauth"
+    "SERVER_KEY": "@fcm-auth"
   }
 }
