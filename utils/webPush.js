@@ -1,5 +1,6 @@
 import 'firebase/messaging'
 import 'firebase/firestore'
+import fetch    from 'isomorphic-fetch'
 import firebase from 'firebase/app'
 import localforage from 'localforage'
 
@@ -36,6 +37,21 @@ const firebaseCloudMessaging = {
         date: firebase.firestore.Timestamp.fromDate(new Date(Date.now()))
       })
       console.log('fcm_token', token)
+      // Topis
+      fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/actus`, {
+        method: 'post',
+        headers: new Headers({
+          'Content-Type':'application/json',
+          'Content-Length': 0,
+          'Authorization': process.env.SERVER_KEY
+        }),
+      })
+      .then((res) => {
+        res.status == 200 ? console.log('Inscrit au topic Actus') : console.log("Problème d'inscription")
+      })
+      .catch((err)=>{
+          console.error('Subscribe ERROR:',err)
+      });
     } catch (error) {
       console.error(error)
     }
