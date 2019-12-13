@@ -2,41 +2,31 @@ import 'firebase/messaging'
 import 'firebase/firestore'
 import fetch    from 'isomorphic-fetch'
 import firebase from 'firebase/app'
-import localforage from 'localforage'
 
 const firebaseCloudMessaging = {
-  tokenInlocalforage: async () => {
-    return localforage.getItem('fcm_tok')
-  },
-
   init: async function () {
     firebase.initializeApp({
-        apiKey: "AIzaSyDIFMxGHgJ64un5OQmiUQW-1umTaEpY8TA",
-        authDomain: "notifications-sga.firebaseapp.com",
-        databaseURL: "https://notifications-sga.firebaseio.com",
-        projectId: "notifications-sga",
-        storageBucket: "notifications-sga.appspot.com",
-        messagingSenderId: "539284504552",
-        appId: "1:539284504552:web:9eb3d24371c3ea28352e5d",
-        measurementId: "G-ND9S7BEXVX"
+      apiKey: "AIzaSyBUwfqjKr5-kzmpjcXX4qOOiMilgeCsLjM",
+      authDomain: "notificationssga.firebaseapp.com",
+      databaseURL: "https://notificationssga.firebaseio.com",
+      projectId: "notificationssga",
+      storageBucket: "notificationssga.appspot.com",
+      messagingSenderId: "1012938001250",
+      appId: "1:1012938001250:web:44393feeec0ad5e9653a3b",
+      measurementId: "G-FBMGGHCFPB"
     })
 
     try {
-      if ((await this.tokenInlocalforage()) !== null) {
-        return false
-      }
-
       const messaging = firebase.messaging()
       await messaging.requestPermission()
       const token = await messaging.getToken()
       const db = firebase.firestore();
 
-      localforage.setItem('fcm_tok', token)
       db.collection("users").doc(token.toString()).set({
         token: token.toString(),
         date: firebase.firestore.Timestamp.fromDate(new Date(Date.now()))
       })
-      console.log('fcm_tok', token)
+      console.log('FCM Token : ', token)
       // Topis
       fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/actus`, {
         method: 'post',
