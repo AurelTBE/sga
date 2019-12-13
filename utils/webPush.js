@@ -6,7 +6,7 @@ import localforage from 'localforage'
 
 const firebaseCloudMessaging = {
   tokenInlocalforage: async () => {
-    return localforage.getItem('fcm_token')
+    return localforage.getItem('fcm_tok')
   },
 
   init: async function () {
@@ -31,12 +31,12 @@ const firebaseCloudMessaging = {
       const token = await messaging.getToken()
       const db = firebase.firestore();
 
-      localforage.setItem('fcm_token', token)
+      localforage.setItem('fcm_tok', token)
       db.collection("users").doc(token.toString()).set({
         token: token.toString(),
         date: firebase.firestore.Timestamp.fromDate(new Date(Date.now()))
       })
-      console.log('fcm_token', token)
+      console.log('fcm_tok', token)
       // Topis
       fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/actus`, {
         method: 'post',
