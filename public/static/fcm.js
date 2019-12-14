@@ -12,4 +12,18 @@ firebase.initializeApp({
   measurementId: "G-ND9S7BEXVX"
 });
 
-firebase.messaging()
+const messaging = firebase.messaging();	firebase.messaging() 
+
+messaging.setBackgroundMessageHandler(function (payload) {	
+  res = JSON.parse(payload.data.notification)
+  const notificationTitle = res.title;	
+  const notificationOptions = {	
+    body: res.body,	
+    icon: res.icon,
+    badge: res.badge,
+    image: res.image,
+    click_action: res.click_action
+  };	
+  return self.registration.showNotification(notificationTitle,	
+    notificationOptions);	
+}); 
