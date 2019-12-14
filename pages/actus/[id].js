@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: "100%",
   },
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(0, 1, 3),
   },
 }));
 
@@ -83,6 +83,37 @@ function Actu({post}) {
                 dangerouslySetInnerHTML={ {
                   __html: article.text
               } } />
+              <Grid container justify="center">
+                {liens && (
+                  liens.map(lien => 
+                    (lien.type === 'Galerie Photo' || lien.type === 'Galerie Vidéo' || lien.type === 'Galerie Musique') ?
+                      (<Link href="/medias/[id]" as={`/medias/${lien.lien}`} key={lien.type+Math.random()}>
+                        <Button variant="contained" color="primary" className={classes.button}>
+                          {lien.type === 'Galerie Photo' && 'Photos'}
+                          {lien.type === 'Galerie Vidéo' && 'Vidéo'}
+                          {lien.type === 'Galerie Musique' && 'Musiques'}
+                        </Button>
+                      </Link>)
+                    :(lien.type === 'Résultat') ?
+                      (<Link href="/resultats/[id]" as={`/resultats/${lien.lien}`} key={lien.type+Math.random()}>
+                        <Button variant="contained" color="primary" className={classes.button}>
+                          Résultats
+                        </Button>
+                      </Link>)
+                    :(lien.type === 'Page du site') ?
+                      (<Link href="/" as={`/`} key={lien.type+Math.random()}>
+                        <Button variant="contained" color="primary" className={classes.button}>
+                          {lien.lien.nom}
+                        </Button>
+                      </Link>)
+                    :(lien.type === 'Site externe') ?
+                      (<Button variant="contained" color="primary" className={classes.button} component="a" aria-label={lien.lien.nom} href={lien.lien.url} target="_blank" rel="noopener" key={lien.type+Math.random()}>
+                        {lien.lien.nom}
+                      </Button>)
+                    : null
+                  )
+                )}
+              </Grid>
               {image_de_fin && (
                 <Grid container justify="center">
                   <Grid item xs={12} sm={10} md={8} lg={6}>
@@ -94,35 +125,6 @@ function Actu({post}) {
           </>
         }
       </Grid>
-      <Grid container justify="center">
-        {liens && (
-            liens.map(lien => 
-              (lien.type === 'Galerie Photo' || lien.type === 'Galerie Vidéo' || lien.type === 'Galerie Musique') ?
-                (<Link href="/medias/[id]" as={`/medias/${lien.lien}`} key={lien.type+Math.random()}>
-                  <Button variant="contained" color="primary" className={classes.button}>
-                    {lien.type}
-                  </Button>
-                </Link>)
-              :(lien.type === 'Résultat') ?
-                (<Link href="/resultats/[id]" as={`/resultats/${lien.lien}`} key={lien.type+Math.random()}>
-                  <Button variant="contained" color="primary" className={classes.button}>
-                    {lien.type}
-                  </Button>
-                </Link>)
-              :(lien.type === 'Page du site') ?
-                (<Link href="/" as={`/`} key={lien.type+Math.random()}>
-                  <Button variant="contained" color="primary" className={classes.button}>
-                    {lien.lien.nom}
-                  </Button>
-                </Link>)
-              :(lien.type === 'Site externe') ?
-                (<Button variant="contained" color="primary" className={classes.button} component="a" aria-label="Facebook" href={lien.lien.url} target="_blank" rel="noopener" key={lien.type+Math.random()}>
-                  {lien.lien.nom}
-                </Button>)
-              : null
-            )
-          )}
-        </Grid>
     </Layout>
   )
 }

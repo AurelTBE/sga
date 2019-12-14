@@ -1,9 +1,12 @@
+import React, { Fragment } from 'react'
 import fetch from 'isomorphic-unfetch';
 import Layout from '../../components/Layout.js';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import Link from 'next/link';
 
 // Icons
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -71,6 +74,9 @@ const useStyles = makeStyles(theme => ({
   smallresumecontent: {
     paddingLeft: 10,
   },
+  button: {
+    margin: theme.spacing(0, 1, 3),
+  },
 }));
 
 // File extension
@@ -82,6 +88,7 @@ function Resultat({result}) {
   const classes = useStyles();
   const theme = useTheme();
   const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+  const { title, ville, date, resume, equipes, categories, thumbnail, liens } = result;
 
   return (
     <Layout>
@@ -101,44 +108,44 @@ function Resultat({result}) {
             width={1}
           >
             <Typography component="h3" variant={isSmallScreen ? "h4" : "h2"} align="center">
-              {result.title}
+              {title}
             </Typography>
           </Box>
           <Grid item xs={10}>
             <Typography component="div" align="center" color="primary" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom>
-              <FontAwesomeIcon icon={faMapMarkerAlt} /> {result.ville}  -  <FontAwesomeIcon icon={faCalendarCheck} /> {result.date}
+              {ville.trim() !== "" && <><FontAwesomeIcon icon={faMapMarkerAlt} /> {ville}  -  </>}<FontAwesomeIcon icon={faCalendarCheck} /> {date}
             </Typography>
             {/* Résumé */}
-            {result.resume &&
+            {resume && ((resume.resume_equipe && resume.resume_equipe[0].type_de_palmares.trim() !== "") || (resume.resume_indiv.equipe && resume.resume_indiv.equipe[0].categorie.trim() !== "") || (resume.resume_indiv.individuelles && resume.resume_indiv.individuelles[0].categorie.trim() !== "") || (resume.resume_etoiles_3d && resume.resume_etoiles_3d[0].etoile_validee.trim() !== "") ) &&
               <Grid item sm={12} className={classes.resume}> 
                 <Box border={2} borderColor="primary.main" p={{ xs: 2 }}>
                   <Typography component="div" variant="h4" color="primary" className={isSmallScreen ? classes.smallresumetext : classes.resumetext} gutterBottom><FontAwesomeIcon icon={faPaperclip} className={isSmallScreen ? classes.smallresumeicon : classes.resumeicon} /> Résumé</Typography>
-                  {result.resume.resume_equipe && (result.resume.resume_equipe.map(equipe => (
-                    <div key={equipe.type_de_palmares} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
+                  {resume.resume_equipe && (resume.resume_equipe.map(equipe => (
+                    <div key={equipe.type_de_palmares+Math.random()} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
                       <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faTrophy} className={classes.resumeiconcol} /> {equipe.type_de_palmares} : {equipe.classement}</Typography>
                     </div>
                   )))}
-                  {result.resume.resume_indiv && (result.resume.resume_indiv.equipe && (result.resume.resume_indiv.equipe.map(resume => (
-                    resume.categorie && (<div key={resume.categorie + resume.classement} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
+                  {resume.resume_indiv && (resume.resume_indiv.equipe && (resume.resume_indiv.equipe.map(resume => (
+                    resume.categorie && (<div key={resume.categorie + resume.classement+Math.random()} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
                       <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faTrophy} className={classes.resumeiconcol} /> {resume.categorie} : {resume.classement}</Typography>
                     </div>)
                   ))))}
-                  {result.resume.resume_indiv && (result.resume.resume_indiv.individuelles && (result.resume.resume_indiv.individuelles.map(indiv => (
-                    <div key={indiv.categorie + indiv.classement} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
-                      <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faMedal} className={classes.resumeiconcol} /> {indiv.categorie} : {indiv.classement.map((gym, index) => <> {gym.prenom_de_la_gym}{gym.place && ` (${gym.place})`}{index < indiv.classement.length - 1 ? ',' : ''}</>)}</Typography>
+                  {resume.resume_indiv && (resume.resume_indiv.individuelles && (resume.resume_indiv.individuelles.map(indiv => (
+                    <div key={indiv.categorie + indiv.classement+Math.random()} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
+                      <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faMedal} className={classes.resumeiconcol} /> {indiv.categorie} : {indiv.classement.map((gym, index) => <Fragment key={gym.prenom_de_la_gym+gym.place+Math.random()}> {gym.prenom_de_la_gym}{gym.place && ` (${gym.place})`}{index < indiv.classement.length - 1 ? ',' : ''}</Fragment>)}</Typography>
                     </div>
                   ))))}
-                  {result.resume.resume_etoiles_3d && (result.resume.resume_etoiles_3d.map(etoile => (
-                    <div key={etoile.etoile_validee} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
-                      <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faStar} className={classes.resumeiconcol} /> {etoile.etoile_validee} : {etoile.prenom_des_gyms.map((gym, index) => <> {gym.prenom}{index < etoile.prenom_des_gyms.length - 1 ? ',' : ''}</>)}</Typography>
+                  {resume.resume_etoiles_3d && (resume.resume_etoiles_3d.map(etoile => (
+                    <div key={etoile.etoile_validee+Math.random()} className={isSmallScreen ? classes.smallresumecontent : classes.resumecontent} >
+                      <Typography component="div" variant="body2" className={isSmallScreen ? classes.metasmall : classes.meta} gutterBottom><FontAwesomeIcon icon={faStar} className={classes.resumeiconcol} /> {etoile.etoile_validee} : {etoile.prenom_des_gyms.map((gym, index) => <Fragment key={gym.prenom+Math.random()}> {gym.prenom}{index < etoile.prenom_des_gyms.length - 1 ? ',' : ''}</Fragment>)}</Typography>
                     </div>
                   )))}
                 </Box>
               </Grid>}
             {/* Equipes */}
             <>
-              {result.equipes && (result.equipes.map(equipe => (
-                <div key={result.date + equipe.nom_de_lequipe}>
+              {equipes && (equipes.map(equipe => (
+                <div key={date + equipe.nom_de_lequipe+Math.random()}>
                   {equipe.palmares && 
                     <>
                       <Box
@@ -155,7 +162,7 @@ function Resultat({result}) {
                         width={1}
                       >
                         <Typography component="h3" variant={isSmallScreen ? "h6" : "h4"} align="center">
-                          {equipe.nom_de_lequipe} - Palmarès
+                          {equipe.nom_de_lequipe.trim() !== "" && <>{equipe.nom_de_lequipe} - </>}Palmarès
                         </Typography>
                       </Box>
                       {getFileExtension(equipe.palmares) == "pdf" ? 
@@ -183,7 +190,7 @@ function Resultat({result}) {
                         width={1}
                       >
                         <Typography component="h3" variant={isSmallScreen ? "h6" : "h4"} align="center">
-                          {equipe.nom_de_lequipe} - Résultats des gyms
+                          {equipe.nom_de_lequipe.trim() !== "" && <>{equipe.nom_de_lequipe} - </>}Résultats des gyms
                         </Typography>
                       </Box>
                       {getFileExtension(equipe.tableau_de_resultats_des_gyms) == "pdf" ? 
@@ -200,8 +207,8 @@ function Resultat({result}) {
             </>
             {/* Catégories */}
             <>
-              {result.categories && (result.categories.categories.map(categorie => (
-                <div key={result.date + categorie.nom_de_la_categorie}>
+              {categories && (categories.categories.map(categorie => (
+                <div key={date + categorie.nom_de_la_categorie+Math.random()}>
                   {categorie.palmares_de_la_categorie && 
                     <>
                       <Box
@@ -218,7 +225,7 @@ function Resultat({result}) {
                         width={1}
                       >
                         <Typography component="h3" variant={isSmallScreen ? "h6" : "h4"} align="center">
-                          Palmarès {categorie.nom_de_la_categorie}
+                          Palmarès{categorie.nom_de_la_categorie.trim() !== "" && <> {categorie.nom_de_la_categorie}</>}
                         </Typography>
                       </Box>
                       {getFileExtension(categorie.palmares_de_la_categorie) == "pdf" ? 
@@ -232,10 +239,7 @@ function Resultat({result}) {
                   }
                 </div>
               )))}
-            </>
-            {/* Tableau de résultat des gyms */}
-            <>
-              {result.tableau_des_resultats_des_gyms && (
+              {categories && categories.tableau_des_resultats_des_gyms && (
                 <>
                   <Box
                     display="flex" 
@@ -254,20 +258,51 @@ function Resultat({result}) {
                       Résultats des gyms
                     </Typography>
                   </Box>
-                  {getFileExtension(result.tableau_des_resultats_des_gyms) == "pdf" ? 
+                  {getFileExtension(categories.tableau_des_resultats_des_gyms) == "pdf" ? 
                     <Box className={classes.pdf}>
-                      <PDFview pdf={result.tableau_des_resultats_des_gyms} />
+                      <PDFview pdf={categories.tableau_des_resultats_des_gyms} />
                     </Box>
                     :
-                    <img src={result.tableau_des_resultats_des_gyms} alt={`Tableau de résultat des gyms`} className={classes.image} />
+                    <img src={categories.tableau_des_resultats_des_gyms} alt={`Tableau de résultat des gyms`} className={classes.image} />
                   }
                 </>
               )}
             </>
           </Grid>
           <Grid container justify="center">
+            {liens && (
+              liens.map(lien => 
+                (lien.type === 'Galerie Photo' || lien.type === 'Galerie Vidéo' || lien.type === 'Galerie Musique') ?
+                  (<Link href="/medias/[id]" as={`/medias/${lien.lien}`} key={lien.type+Math.random()}>
+                    <Button variant="contained" color="primary" className={classes.button}>
+                      {lien.type === 'Galerie Photo' && 'Photos'}
+                      {lien.type === 'Galerie Vidéo' && 'Vidéo'}
+                      {lien.type === 'Galerie Musique' && 'Musiques'}
+                    </Button>
+                  </Link>)
+                :(lien.type === 'Résultat') ?
+                  (<Link href="/resultats/[id]" as={`/resultats/${lien.lien}`} key={lien.type+Math.random()}>
+                    <Button variant="contained" color="primary" className={classes.button}>
+                      Résultats
+                    </Button>
+                  </Link>)
+                :(lien.type === 'Page du site') ?
+                  (<Link href="/" as={`/`} key={lien.type+Math.random()}>
+                    <Button variant="contained" color="primary" className={classes.button}>
+                      {lien.lien.nom}
+                    </Button>
+                  </Link>)
+                :(lien.type === 'Site externe') ?
+                  (<Button variant="contained" color="primary" className={classes.button} component="a" aria-label={lien.lien.nom} href={lien.lien.url} target="_blank" rel="noopener" key={lien.type+Math.random()}>
+                    {lien.lien.nom}
+                  </Button>)
+                : null
+              )
+            )}
+          </Grid>
+          <Grid container justify="center">
             <Grid item xs={12} sm={10} md={8} lg={6}>
-              {result.thumbnail && <img src={result.thumbnail} alt={result.title} className={classes.media} />}
+              {thumbnail && <img src={thumbnail} alt={title} className={classes.media} />}
             </Grid>
           </Grid>
         </Grid>
