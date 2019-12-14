@@ -12,20 +12,4 @@ firebase.initializeApp({
   measurementId: "G-ND9S7BEXVX"
 });
 
-self.addEventListener("push", (event) => {
-  const pushData = event.notification.data;
-  console.log(pushData)
-  event.waitUntil(
-      self.registration.showNotification(pushData.title, {
-          body: pushData.body,
-          icon: pushData.icon,
-          badge: pushData.badge,
-          image: pushData.image,
-      })
-  );
-});
-
-self.addEventListener("notificationclick", (event) => {
-  event.notification.close();   
-  self.clients.openWindow(`www.sgagymfem.com`)
-});
+firebase.messaging()

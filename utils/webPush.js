@@ -26,6 +26,7 @@ const firebaseCloudMessaging = {
         token: token.toString(),
         date: firebase.firestore.Timestamp.fromDate(new Date(Date.now()))
       })
+      console.log(token)
       // Topic
       fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/actus`, {
         method: 'post',
