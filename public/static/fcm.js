@@ -12,18 +12,14 @@ firebase.initializeApp({
   measurementId: "G-ND9S7BEXVX"
 });
 
-const messaging = firebase.messaging();	firebase.messaging() 
-
-messaging.setBackgroundMessageHandler(function (payload) {	
-  res = JSON.parse(payload.data.notification)
-  const notificationTitle = res.title;	
-  const notificationOptions = {	
-    body: res.body,	
-    icon: res.icon,
-    badge: res.badge,
-    image: res.image,
-    click_action: res.click_action
-  };	
-  return self.registration.showNotification(notificationTitle,	
-    notificationOptions);	
-}); 
+self.addEventListener("push", (event) => {
+  const pushData = event.data.notification.json();
+  event.waitUntil(
+      self.registration.showNotification(pushData.title, {
+          body: pushData.body,
+          icon: pushData.icon,
+          badge: pushData.badge,
+          image: pushData.image,
+      })
+  );
+});
