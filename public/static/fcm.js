@@ -13,7 +13,8 @@ firebase.initializeApp({
 });
 
 self.addEventListener("push", (event) => {
-  const pushData = event.data.notification.json();
+  const pushData = event.notification.data;
+  console.log(pushData)
   event.waitUntil(
       self.registration.showNotification(pushData.title, {
           body: pushData.body,
@@ -22,4 +23,9 @@ self.addEventListener("push", (event) => {
           image: pushData.image,
       })
   );
+});
+
+self.addEventListener("notificationclick", (event) => {
+  event.notification.close();   
+  self.clients.openWindow(`www.sgagymfem.com`)
 });
