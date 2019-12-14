@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
     maxWidth: "100%",
   },
   button: {
-    margin: theme.spacing(0, 1, 3),
+    margin: theme.spacing(0, 1, 2),
   },
 }));
 
