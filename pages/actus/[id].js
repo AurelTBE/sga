@@ -43,6 +43,9 @@ const useStyles = makeStyles(theme => ({
   },
   button: {
     margin: theme.spacing(0, 1, 2),
+    [theme.breakpoints.down('sm')]: {
+      margin: theme.spacing(1, 1, 2),
+    },
   },
 }));
 

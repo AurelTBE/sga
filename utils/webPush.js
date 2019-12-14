@@ -26,7 +26,6 @@ const firebaseCloudMessaging = {
         token: token.toString(),
         date: firebase.firestore.Timestamp.fromDate(new Date(Date.now()))
       })
-      console.log('FCM Token : ', token)
       // Topis
       fetch(`https://iid.googleapis.com/iid/v1/${token}/rel/topics/actus`, {
         method: 'post',
@@ -37,7 +36,7 @@ const firebaseCloudMessaging = {
         }),
       })
       .then((res) => {
-        res.status == 200 ? console.log('Inscrit au topic Actus') : console.log("Problème d'inscription")
+        res.status == 200 ? console.log('Inscrit aux notifications') : console.log("Problème d'inscription")
       })
       .catch((err)=>{
           console.error('Subscribe ERROR:',err)
