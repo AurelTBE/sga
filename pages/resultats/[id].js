@@ -283,10 +283,10 @@ function Resultat({result}) {
                       {lien.type === 'Galerie Musique' && 'Musiques'}
                     </Button>
                   </Link>)
-                :(lien.type === 'Résultat') ?
-                  (<Link href="/resultats/[id]" as={`/resultats/${lien.lien}`} key={lien.type+Math.random()}>
+                :(lien.type === 'Actu') ?
+                  (<Link href="/actus/[id]" as={`/actus/${lien.lien}`} key={lien.type+Math.random()}>
                     <Button variant="contained" color="primary" className={classes.button}>
-                      Résultats
+                      Article
                     </Button>
                   </Link>)
                 :(lien.type === 'Page du site') ?

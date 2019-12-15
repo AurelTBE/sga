@@ -116,7 +116,17 @@ export default function CardBenevole(props) {
                         return (
                           <div key={fonction}>
                             <Typography className={classes.pos} variant="body2" className={classes.fct}>
-                            <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> : {infos.role}
+                              <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> : {infos.role}
+                            </Typography>
+                          </div>
+                        );
+                      case 'Compétition':
+                        return (
+                          <div key={fonction}>
+                            <Typography className={classes.pos} variant="body2" className={classes.fct}>
+                              <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> : {infos.en_competition.map((fct, index) => {
+                                return <span key={fonction+fct}> {fct}{index < infos.en_competition.length - 1 ? ',' : ''}</span>
+                              })}
                             </Typography>
                           </div>
                         );
@@ -195,7 +205,17 @@ export default function CardBenevole(props) {
                   return (
                     <div key={fonction}>
                       <Typography className={classes.pos} variant="body2" className={classes.fct}>
-                      <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> *{infos.role}*
+                      <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> : {infos.role}
+                      </Typography>
+                    </div>
+                  );
+                case 'Compétition':
+                  return (
+                    <div key={fonction}>
+                      <Typography className={classes.pos} variant="body2" className={classes.fct}>
+                        <Typography className={classes.pos} component="span" variant="body2" color="secondary"><b>{fonction}</b></Typography> : {infos.en_competition.map((fct, index) => {
+                          return <span key={fonction+fct}> {fct}{index < infos.en_competition.length - 1 ? ',' : ''}</span>
+                        })}
                       </Typography>
                     </div>
                   );
