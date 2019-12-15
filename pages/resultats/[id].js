@@ -279,7 +279,7 @@ function Resultat({result}) {
                   (<Link href="/medias/[id]" as={`/medias/${lien.lien}`} key={lien.type+Math.random()}>
                     <Button variant="contained" color="primary" className={classes.button}>
                       {lien.type === 'Galerie Photo' && 'Photos'}
-                      {lien.type === 'Galerie Vidéo' && 'Vidéo'}
+                      {lien.type === 'Galerie Vidéo' && 'Vidéos'}
                       {lien.type === 'Galerie Musique' && 'Musiques'}
                     </Button>
                   </Link>)
