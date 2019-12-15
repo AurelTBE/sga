@@ -12,4 +12,33 @@ firebase.initializeApp({
   measurementId: "G-ND9S7BEXVX"
 });
 
-firebase.messaging()
+const messaging = firebase.messaging();
+
+messaging.setBackgroundMessageHandler(function(payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+  res = payload.data;
+  // Customize notification here
+  const notificationTitle = res.title;
+  const notificationOptions = {
+    body: res.body,
+    icon: '/static/android-chrome-192x192.png',
+    badge: '/static/ic_stat_dragon.png',
+    image: res.image,
+    data: {
+      link: res.click_action
+    }
+  };
+
+  return self.registration.showNotification(notificationTitle,
+    notificationOptions);
+});
+
+self.addEventListener('notificationclick', function(event) {
+  const link = event.notification.data.link
+
+  event.notification.close();
+
+  event.waitUntil(
+    clients.openWindow(link)
+  );
+});
