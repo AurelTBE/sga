@@ -86,9 +86,9 @@ function Archives({ setactivarchivestab, activeTab, archivesContent }) {
             variant="fullWidth"
             aria-label="Présentation de la section féminine de gym de la SGA"
           >
-            <Tab label="A Venir / Retour sur" {...a11yProps(0)} />
+            <Tab label="Bénévole à l'honneur" {...a11yProps(0)} />
             <Tab label="Lumière sur" {...a11yProps(1)} />
-            <Tab label="Bénévole à l'honneur" {...a11yProps(2)} />
+            <Tab label="Événements" {...a11yProps(2)} />
           </Tabs>
         </AppBar>
         <SwipeableViews
