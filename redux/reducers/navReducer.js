@@ -1,4 +1,4 @@
-import { HOMETAB, GFTAB, SGATAB, RESULTAB, MEDIATAB, JUGESTAB, AUDIOPLAY, NOTIFPERM, LOADING } from '../actionTypes';
+import { HOMETAB, GFTAB, SGATAB, RESULTAB, MEDIATAB, JUGESTAB, ARCHIVESTAB, AUDIOPLAY, NOTIFPERM, LOADING } from '../actionTypes';
 
 export const homeTabReducer = (state = 0, action) => {
     switch (action.type) {
@@ -48,6 +48,15 @@ export const mediaTabReducer = (state = 0, action) => {
 export const jugesTabReducer = (state = 0, action) => {
     switch (action.type) {
         case JUGESTAB:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const archivesTabReducer = (state = 0, action) => {
+    switch (action.type) {
+        case ARCHIVESTAB:
             return action.payload;
         default:
             return state;

@@ -1,4 +1,4 @@
-import { HOMECONTENT, SGACONTENT, GFCONTENT, JUGESCONTENT, GALERIECONTENT, VIDPLAYCONTENT, CURRENTACTU, CURRENTRESULT, MEDIATHEQUECONTENT, CALENDARCONTENT, RESULTSBOXCONTENT } from '../actionTypes';
+import { HOMECONTENT, SGACONTENT, GFCONTENT, JUGESCONTENT, ARCHIVESCONTENT, GALERIECONTENT, VIDPLAYCONTENT, CURRENTACTU, CURRENTRESULT, MEDIATHEQUECONTENT, CALENDARCONTENT, RESULTSBOXCONTENT } from '../actionTypes';
 
 export const homeContentReducer = (state={}, action) => {
     switch (action.type) {
@@ -30,6 +30,15 @@ export const gfContentReducer = (state={}, action) => {
 export const jugContentReducer = (state={}, action) => {
     switch (action.type) {
         case JUGESCONTENT:
+            return action.payload;
+        default:
+            return state;
+    }
+};
+
+export const archivesContentReducer = (state={}, action) => {
+    switch (action.type) {
+        case ARCHIVESCONTENT:
             return action.payload;
         default:
             return state;

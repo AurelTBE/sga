@@ -1,7 +1,7 @@
 import { combineReducers } from 'redux';
 import { authReducer, authError} from './authReducer';
-import { homeTabReducer, gfTabReducer, sgaTabReducer, resulTabReducer, mediaTabReducer, jugesTabReducer, audioPlayReducer, notifPermReducer, loadingReducer } from './navReducer';
-import { homeContentReducer, sgaContentReducer, gfContentReducer, jugContentReducer, currentActuReducer, currentResultReducer, galContentReducer, vidPlayReducer, mediathequeReducer, calendarReducer, resultsBoxReducer } from './contentReducer';
+import { homeTabReducer, gfTabReducer, sgaTabReducer, resulTabReducer, mediaTabReducer, jugesTabReducer, archivesTabReducer, audioPlayReducer, notifPermReducer, loadingReducer } from './navReducer';
+import { homeContentReducer, sgaContentReducer, gfContentReducer, jugContentReducer, archivesContentReducer, currentActuReducer, currentResultReducer, galContentReducer, vidPlayReducer, mediathequeReducer, calendarReducer, resultsBoxReducer } from './contentReducer';
 
 const rootReducer = combineReducers({
     authentication: authReducer,
@@ -11,10 +11,12 @@ const rootReducer = combineReducers({
     activresultab: resulTabReducer,
     activmediatab: mediaTabReducer,
     activjugestab: jugesTabReducer,
+    activarchivestab: archivesTabReducer,
     homecontent: homeContentReducer,
     sgacontent: sgaContentReducer,
     gfcontent: gfContentReducer,
     jugescontent: jugContentReducer,
+    archivescontent: archivesContentReducer,
     currentactu: currentActuReducer,
     currentresult: currentResultReducer,
     galeriecontent: galContentReducer,
