@@ -11,9 +11,7 @@ import Box from '@material-ui/core/Box';
 
 // Components
 import Layout from '../components/Layout'
-import ResultJeunesses from '../components/resultats/ResultJeunesses';
-import ResultAinees from '../components/resultats/ResultAinees';
-import ResultIndivs from '../components/resultats/ResultIndivs';
+import CardArchives from '../components/cards/CardArchives';
 
 // Get & use scroll position
 import useScrollPosition from "../utils/useScrollPosition";
@@ -60,6 +58,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 function Archives({ setactivarchivestab, activeTab, archivesContent }) {
+  const { benevhonneur, lumieresur, evenements } = archivesContent
   const classes = useStyles();
   const theme = useTheme();
   const scrollPos = useScrollPosition();
@@ -97,24 +96,36 @@ function Archives({ setactivarchivestab, activeTab, archivesContent }) {
           onChangeIndex={handleChangeIndex}
         >
           <TabPanel value={activeTab} index={0} dir={theme.direction}>
-            <div>Tab 1</div>
+            <CardArchives articles={benevhonneur} />
           </TabPanel>
           <TabPanel value={activeTab} index={1} dir={theme.direction}>
-            <div>Tab 2</div>
+            <CardArchives articles={lumieresur} />
           </TabPanel>
           <TabPanel value={activeTab} index={2} dir={theme.direction}>
-            <div>Tab 3</div>
+            <CardArchives articles={evenements} />
           </TabPanel>
         </SwipeableViews>
       </div>
-      {console.log(archivesContent)}
     </Layout>
   );
 }
 
 Archives.getInitialProps = async function(ctx) {
   const arch = await fetch(`https://sga-gymfeminine.fr/bo/wp-json/sga/v1/archives`);
-  const archives = await arch.json();
+  const archiv = await arch.json();
+
+  const benhon = [...new Set(archiv.map(actu => actu.type == "Bénévole à l'honneur" && actu))]
+  const benevhonneur = benhon.filter(Boolean)
+  const lumi = [...new Set(archiv.map(actu => actu.type == "Lumière sur" && actu))]
+  const lumieresur = lumi.filter(Boolean)
+  const even = [...new Set(archiv.map(actu => (actu.type == "A Venir" || actu.type == "Retour sur") && actu))]
+  const evenements = even.filter(Boolean)
+
+  const archives = {
+    benevhonneur,
+    lumieresur,
+    evenements
+  }
 
   ctx.store.dispatch({ type: ARCHIVESCONTENT, payload: archives });
 
