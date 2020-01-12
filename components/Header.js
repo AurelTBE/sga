@@ -7,6 +7,7 @@ import IconButton from '@material-ui/core/IconButton';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import MenuIcon from '@material-ui/icons/Menu';
 import AccountCircle from '@material-ui/icons/AccountCircle';
+import AccountCircleOutlinedIcon from '@material-ui/icons/AccountCircleOutlined';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Link from 'next/link';
@@ -220,7 +221,7 @@ function Header({isAuthenticated, role, setactivhometab, setactivsgatab, setacti
           {isAuthenticated ? 
            <Link href="/profil" as={`/profil`}>
             <IconButton color="inherit">
-              <AccountCircle />
+              <AccountCircleOutlinedIcon />
             </IconButton>
            </Link> 
            : 
