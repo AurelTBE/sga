@@ -25,6 +25,7 @@ class MyDocument extends Document {
           <link rel="shortcut icon" href="/static/favicon.ico" />
           <meta name="msapplication-TileColor" content="#d32f2f" />
           <meta name="msapplication-config" content="/static/browserconfig.xml" />
+          <meta name="google-site-verification" content="Y34rbSk3QYTohIzrFSINH_AZzGRToZ1CZQT85bDgEgw" />
           {/* PWA primary color */}
           <meta name="theme-color" content={theme.palette.primary.main} />
           <link
