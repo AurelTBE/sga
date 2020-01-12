@@ -73,7 +73,6 @@ const nextConfig = {
     // this will output your push listener file to .next folder
     // check CopyWebpackPlugin docs if you want to change the destination (e.g. /static or /.next/static)
     config.plugins.push(new CopyWebpackPlugin(['static/fcm.js']));
-    config.plugins.push(new CopyWebpackPlugin(['static/sitemap.xml']));
     return config
   },
 }
