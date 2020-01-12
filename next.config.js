@@ -12,6 +12,11 @@ const nextConfig = {
   env: {
     FCM_SERVER_KEY: process.env.FCM_SERVER_KEY
   },
+  exportPathMap: function () {
+    return {
+      '/': { page: '/' },
+    }
+  },
   module: {
     rules: [
       { test: /\.css$/, use: 'css-loader' },
