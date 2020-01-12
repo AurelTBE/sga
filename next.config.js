@@ -2,10 +2,10 @@ const withOffline = require('next-offline')
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const sitemap = require('nextjs-sitemap-generator');
 
-sitemap({
-  baseUrl: 'https://www.sgagymfem.com/',
-  pagesDirectory: `${__dirname}/pages`,
-  targetDirectory: 'public/static/'
+sitemap({  
+  baseUrl: 'https://www.sgagymfem.com/',  
+  pagesDirectory: __dirname + "/pages",  
+  targetDirectory : 'static/'  
 });
 
 const nextConfig = {
