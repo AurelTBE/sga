@@ -170,7 +170,7 @@ export default function CardBenevole(props) {
             </Typography>
         )
           :
-        event.groupe && 
+        (event.groupe && (event.groupe.length > 0)) &&
           <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
             <FontAwesomeIcon icon={faUsers} className={clsx(classes.leftIcon, classes.iconSmall)} />
             {event.groupe.map((grp, index) => {
@@ -232,7 +232,9 @@ export default function CardBenevole(props) {
                     </Grid>
                   </Grid>
                 </Grid>
-                {isSmallScreen && contEvent(event)}
+                <Grid item xs={12}>
+                  {isSmallScreen && contEvent(event)}
+                </Grid>
               </Grid>
             </CardContent>
           </Card>
