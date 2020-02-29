@@ -76,6 +76,9 @@ const useStyles = makeStyles(theme => ({
     display: "inline-block",
     textDecoration: "none",
     color: theme.palette.text.secondary
+  },
+  smlnk: {
+    fontWeight: "bold"
   }
 }));
 
@@ -147,10 +150,10 @@ export default function CardBenevole(props) {
 
   function contEvent(event) {
     return (
-    <>
+    <Grid item align="left">
       {event.ville &&
         <a href={`https://www.google.com/maps/dir/?api=1&destination=${event.adresse.lat},${event.adresse.lng}`} target="_blank" rel="noopener" className={classes.link}>
-          <Typography variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
+          <Typography variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={clsx(classes.ico, classes.smlnk)}>
             <FontAwesomeIcon icon={faMapMarkedAlt} className={clsx(classes.leftIcon, classes.iconSmall)} color={eventColor(event.type)} />
             <span className={classes.city}>{event.ville}{event.lieu && ", "}</span><span className={classes.linebreak}>{event.lieu}</span>
           </Typography>
@@ -178,7 +181,7 @@ export default function CardBenevole(props) {
             })}
           </Typography>
       }
-    </>
+    </Grid>
   )}
 
   if (error) return <div>Impossible de charger les événements...</div>
@@ -190,8 +193,8 @@ export default function CardBenevole(props) {
           <Card className={classes.card}>
             <CardContent>
               <Grid container spacing={2}>
-                <Grid item xs={4} md={2}>
-                  <ButtonBase onClick={() => handleClickOpen(event)} style={{width: "100%"}}>
+                <ButtonBase onClick={() => handleClickOpen(event)} style={{width: "100%"}}>
+                  <Grid item xs={4} md={2}>
                     <Box
                       display="flex" 
                       color="background.paper"
@@ -206,32 +209,34 @@ export default function CardBenevole(props) {
                     >
                       <Box align="center">{labelProps.size==="large" ? format(event.datedebut, 'dd MMMM', {locale: fr}) : format(event.datedebut, 'dd MMM', {locale: fr})}</Box>
                     </Box>
-                  </ButtonBase>
-                  <Box
-                    display="flex" 
-                    color={eventColor(event.type)}
-                    fontFamily="h6.fontFamily"
-                    fontSize={{ xs: 'subtitle1.fontSize', md: 'h6.fontSize' }}
-                    justifyContent="center"
-                    alignItems="center"
-                  >
-                    {event.type}
-                  </Box>
-                </Grid>
-                <Grid item xs={8} md={10} container> 
-                  <Grid item xs container direction="column" spacing={2}>
-                    <Grid item xs>
-                      <Box 
-                        color={eventColor(event.type)}
-                      >
-                        <Typography variant={labelProps.size==="large" ? 'h4' : 'h5'} component="h2" color="inherit">
-                          {event.title}
-                        </Typography>
-                      </Box>
-                      {!isSmallScreen && contEvent(event)}
+                    <Box
+                      display="flex" 
+                      color={eventColor(event.type)}
+                      fontFamily="h6.fontFamily"
+                      fontSize={{ xs: 'subtitle1.fontSize', md: 'h6.fontSize' }}
+                      justifyContent="center"
+                      alignItems="flex-start"
+                    >
+                      {event.type}
+                    </Box>
+                  </Grid>
+                  <Grid item xs={8} md={10} container> 
+                    <Grid item xs container direction="column" spacing={2}>
+                      <Grid item xs>
+                        <Box
+                          align="left" 
+                          color={eventColor(event.type)}
+                          p={1}
+                        >
+                          <Typography variant={labelProps.size==="large" ? 'h4' : 'h5'} component="h2" color="inherit">
+                            {event.title}
+                          </Typography>
+                        </Box>
+                        {!isSmallScreen && contEvent(event)}
+                      </Grid>
                     </Grid>
                   </Grid>
-                </Grid>
+                </ButtonBase>
                 <Grid item xs={12}>
                   {isSmallScreen && contEvent(event)}
                 </Grid>
