@@ -9,7 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faMapMarkedAlt, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faMapMarkedAlt, faUsers, faUser, faUserClock } from '@fortawesome/free-solid-svg-icons';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale'
 
@@ -198,14 +198,31 @@ export default function CardBenevole(props) {
                             <FontAwesomeIcon icon={faMapMarkedAlt} className={clsx(classes.leftIcon, classes.iconSmall)} color={eventColor(event.type)} />
                             <span className={classes.city}>{event.ville}{event.lieu && ", "}</span><span className={classes.linebreak}>{event.lieu}</span>
                           </Typography>
-                        </a>}
-                      {event.groupe && 
-                        <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
-                          <FontAwesomeIcon icon={faUsers} className={clsx(classes.leftIcon, classes.iconSmall)} />
-                          {event.groupe.map((grp, index) => {
-                            return <span className={classes.linebreak} key={event.id+grp}>{grp}{index < event.groupe.length - 1 && ',\u00A0'}</span>
-                          })}
-                        </Typography>}
+                        </a>
+                      }
+                      {event.participants[0].nom_equipe !== "" ?
+                        event.participants.map((part) =>
+                            <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico} key={event.id+part+Math.random()}>
+                              {part.heure_rdv || part.horaire_palmares ? 
+                                <FontAwesomeIcon icon={faUserClock} className={clsx(classes.leftIcon, classes.iconSmall)} />
+                                :
+                                <FontAwesomeIcon icon={faUser} className={clsx(classes.leftIcon, classes.iconSmall)} />
+                              }
+                              <span className={classes.linebreak}>{part.nom_equipe}</span>
+                            {part.heure_rdv && <Box display="inline" color={eventColor(event.type)}> - RDV: {part.heure_rdv}{part.horaire_palmares && " -"}</Box>}
+                              {part.horaire_palmares && <span>{!part.heure_rdv && " -"} Palmarès : {part.horaire_palmares}</span>}
+                            </Typography>
+                        )
+                          :
+                        event.groupe && 
+                          <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
+                            <FontAwesomeIcon icon={faUsers} className={clsx(classes.leftIcon, classes.iconSmall)} />
+                            {event.groupe.map((grp, index) => {
+                              return <span className={classes.linebreak} key={event.id+grp}>{grp}{index < event.groupe.length - 1 && ',\u00A0'}</span>
+                            })}
+                          </Typography>
+                      }
+
                     </Grid>
                   </Grid>
                 </Grid>

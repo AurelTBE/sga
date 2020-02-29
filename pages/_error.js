@@ -37,9 +37,9 @@ function Error({ statusCode }) {
           <Grid item>
             {statusCode
               ? 
-              <Typography variant="h5" color="Primary" gutterBottom>Une erreur {statusCode} s'est produite sur le serveur. La page n'a pas été trouvée...</Typography>
+              <Typography variant="h5" color="primary" gutterBottom>Une erreur {statusCode} s'est produite sur le serveur. La page n'a pas été trouvée...</Typography>
               : 
-              <Typography variant="h5" color="Primary" gutterBottom>Une erreur s'est produite sur votre appareil, vérifiez votre connexion ou réessayez plus tard.</Typography>
+              <Typography variant="h5" color="primary" gutterBottom>Une erreur s'est produite sur votre appareil, vérifiez votre connexion ou réessayez plus tard.</Typography>
             }
           </Grid>
           <Button variant="contained" color="primary" href="/">

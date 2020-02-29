@@ -66,9 +66,18 @@ function Actu({post}) {
           </Box>
         </Grid>
         {article.pdf ? 
-          <Box className={classes.pdf}>
-            <PDFview pdf={article.pdf} />
-          </Box>
+          <Grid>
+            <Box className={classes.pdf}>
+              <PDFview pdf={article.pdf} />
+            </Box>
+            {image_de_fin && (
+              <Grid container justify="center">
+                <Grid item xs={12} sm={10} md={8} lg={6}>
+                  <img src={image_de_fin} alt={title} className={classes.media} />
+                </Grid>
+              </Grid>
+            )}
+          </Grid>
         :
           <>
             <Grid item xs={12} sm={10}>
