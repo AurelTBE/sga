@@ -145,6 +145,42 @@ export default function CardBenevole(props) {
     }
   }
 
+  function contEvent(event) {
+    return (
+    <>
+      {event.ville &&
+        <a href={`https://www.google.com/maps/dir/?api=1&destination=${event.adresse.lat},${event.adresse.lng}`} target="_blank" rel="noopener" className={classes.link}>
+          <Typography variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
+            <FontAwesomeIcon icon={faMapMarkedAlt} className={clsx(classes.leftIcon, classes.iconSmall)} color={eventColor(event.type)} />
+            <span className={classes.city}>{event.ville}{event.lieu && ", "}</span><span className={classes.linebreak}>{event.lieu}</span>
+          </Typography>
+        </a>
+      }
+      {event.participants[0].nom_equipe !== "" ?
+        event.participants.map((part) =>
+            <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico} key={event.id+part+Math.random()}>
+              {part.heure_rdv || part.horaire_palmares ? 
+                <FontAwesomeIcon icon={faUserClock} className={clsx(classes.leftIcon, classes.iconSmall)} />
+                :
+                <FontAwesomeIcon icon={faUser} className={clsx(classes.leftIcon, classes.iconSmall)} />
+              }
+              <span className={classes.linebreak}>{part.nom_equipe}</span>
+            {part.heure_rdv && <Box display="inline" color={eventColor(event.type)}> - RDV: {part.heure_rdv}{part.horaire_palmares && " -"}</Box>}
+              {part.horaire_palmares && <span>{!part.heure_rdv && " -"} Palmarès : {part.horaire_palmares}</span>}
+            </Typography>
+        )
+          :
+        event.groupe && 
+          <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
+            <FontAwesomeIcon icon={faUsers} className={clsx(classes.leftIcon, classes.iconSmall)} />
+            {event.groupe.map((grp, index) => {
+              return <span className={classes.linebreak} key={event.id+grp}>{grp}{index < event.groupe.length - 1 && ',\u00A0'}</span>
+            })}
+          </Typography>
+      }
+    </>
+  )}
+
   if (error) return <div>Impossible de charger les événements...</div>
   if (!data) return <div>Chargement des événements...</div>
   return (
@@ -192,40 +228,11 @@ export default function CardBenevole(props) {
                           {event.title}
                         </Typography>
                       </Box>
-                      {event.ville &&
-                        <a href={`https://www.google.com/maps/dir/?api=1&destination=${event.adresse.lat},${event.adresse.lng}`} target="_blank" rel="noopener" className={classes.link}>
-                          <Typography variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
-                            <FontAwesomeIcon icon={faMapMarkedAlt} className={clsx(classes.leftIcon, classes.iconSmall)} color={eventColor(event.type)} />
-                            <span className={classes.city}>{event.ville}{event.lieu && ", "}</span><span className={classes.linebreak}>{event.lieu}</span>
-                          </Typography>
-                        </a>
-                      }
-                      {event.participants[0].nom_equipe !== "" ?
-                        event.participants.map((part) =>
-                            <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico} key={event.id+part+Math.random()}>
-                              {part.heure_rdv || part.horaire_palmares ? 
-                                <FontAwesomeIcon icon={faUserClock} className={clsx(classes.leftIcon, classes.iconSmall)} />
-                                :
-                                <FontAwesomeIcon icon={faUser} className={clsx(classes.leftIcon, classes.iconSmall)} />
-                              }
-                              <span className={classes.linebreak}>{part.nom_equipe}</span>
-                            {part.heure_rdv && <Box display="inline" color={eventColor(event.type)}> - RDV: {part.heure_rdv}{part.horaire_palmares && " -"}</Box>}
-                              {part.horaire_palmares && <span>{!part.heure_rdv && " -"} Palmarès : {part.horaire_palmares}</span>}
-                            </Typography>
-                        )
-                          :
-                        event.groupe && 
-                          <Typography component="div" variant={labelProps.size==="large" ? 'h6' : 'body2'} color="textSecondary" className={classes.ico}>
-                            <FontAwesomeIcon icon={faUsers} className={clsx(classes.leftIcon, classes.iconSmall)} />
-                            {event.groupe.map((grp, index) => {
-                              return <span className={classes.linebreak} key={event.id+grp}>{grp}{index < event.groupe.length - 1 && ',\u00A0'}</span>
-                            })}
-                          </Typography>
-                      }
-
+                      {!isSmallScreen && contEvent(event)}
                     </Grid>
                   </Grid>
                 </Grid>
+                {isSmallScreen && contEvent(event)}
               </Grid>
             </CardContent>
           </Card>
