@@ -218,7 +218,7 @@ export default function CardBenevole(props) {
                     {event.type}
                   </Box>
                 </Grid>
-                <Grid item xs container> 
+                <Grid item xs={8} md={10} container> 
                   <Grid item xs container direction="column" spacing={2}>
                     <Grid item xs>
                       <Box 
