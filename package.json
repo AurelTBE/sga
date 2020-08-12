@@ -58,7 +58,7 @@
     "fslightbox-react": "^1.4.2",
     "pdfjs-dist": "^2.2.228",
     "react-masonry-css": "^1.0.13",
-    "serialize-javascript": ">=2.1.1"
+    "serialize-javascript": ">=3.1.0"
   },
   "engines": {
     "node": "12.x"
